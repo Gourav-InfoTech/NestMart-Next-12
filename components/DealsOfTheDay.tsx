@@ -13,7 +13,9 @@ const dodBoxVariant = {
 };
 
 const DealsOfTheDay = () => {
-  const [dodRef, inView] = useInView();
+  const [dodRef, inView] = useInView({
+    triggerOnce:true
+  });
 
   return (
     <>
