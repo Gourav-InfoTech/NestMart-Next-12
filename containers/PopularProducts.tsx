@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PopularItemCard from "../components/PopularItemCard";
-import { Product_Api } from "../Utils/Api";
+
 
 const PopularProducts = ({ data }: any) => {
   const [item, setItem] = useState([]);

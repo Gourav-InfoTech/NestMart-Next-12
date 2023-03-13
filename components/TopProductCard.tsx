@@ -5,7 +5,6 @@ import TopItem from "./TopItem";
 
 const TopProductCard = ({ title, data }: any) => {
 
-
   return (
     <Box>
       <h1 className="box_title mb-[40px] pb-3">{title} </h1>

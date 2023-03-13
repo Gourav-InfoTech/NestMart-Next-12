@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { FiChevronRight } from "react-icons/fi";
 import styled from "styled-components";
 import { DOD_BANNER } from "../Utils/DATA";
 import DodBanner from "./DodBanner";
 import DodItem from "./DodItem";
-import { useAnimation, motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const dodBoxVariant = {
@@ -13,79 +13,14 @@ const dodBoxVariant = {
 };
 
 const DealsOfTheDay = () => {
-  const controls = useAnimation();
   const [dodRef, inView] = useInView();
-  const [toBottom, setToBottom] = useState(true);
-  const scrollY = useRef(0);
-
-  const pageYscroll = () => {
-    if (scrollY.current > window.pageYOffset) {
-      setToBottom(false);
-    } else {
-      setToBottom(true);
-    }
-    scrollY.current = window.pageYOffset;
-  };
-
-  useEffect(() => {
-    window?.addEventListener("scroll", pageYscroll);
-
-    return () => {
-      window?.removeEventListener("scroll", pageYscroll);
-    };
-  }, []);
-
-  console.log(toBottom);
-
-  useEffect(() => {
-    if (toBottom) {
-      controls.start("visible");
-    } else if (!toBottom && !inView) {
-      controls.start("hidden");
-    }
-  }, [inView, setToBottom]);
-
-  // useEffect(() => {
-  //   let position = window.scrollY;
-  //   console.log(position);
-
-  //   if (position > yScroll) {
-  //     setToBottom(true);
-  //   } else {
-  //     setToBottom(false);
-  //   }
-  // }, [yScroll]);
-  // if(typeof window !== "undefined" ){
-  //   let oldScrollY = window.scrollY;
-  //   let targetScrollY = window.scrollY;
-  //   window.onscroll = function (e) {
-  //     if (oldScrollY < window.scrollY && inView) {
-  //       controls.start("visible");
-  //       targetScrollY = window.scrollY;
-  //     } else if (oldScrollY > window.scrollY) {
-  //       controls.start("visible");
-  //     } else if (targetScrollY > window.scrollY && !inView) {
-  //       controls.start("hidden");
-  //     }
-  //     oldScrollY = window.scrollY;
-  //   };
-  // }
-  console.log(toBottom);
-
-  // useEffect(() => {
-  //   if (inView) {
-  //     controls.start("visible");
-  //   } else {
-  //     controls.start("hidden");
-  //   }
-  // }, [inView]);
 
   return (
     <>
       {/* ------------Dod - Deals of the day----------------- */}
       <Dod
         ref={dodRef}
-        animate={controls}
+        animate={inView ? "visible" : "hidden"}
         initial="hidden"
         variants={dodBoxVariant}
       >
@@ -137,3 +72,36 @@ const DodBanners = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+
+// for complex animation
+
+  // const [toBottom, setToBottom] = useState(true);
+  // const scrollY = useRef(0);
+
+  // const pageYscroll = () => {
+  //   if (scrollY.current > window.pageYOffset) {
+  //     setToBottom(false);
+  //   } else {
+  //     setToBottom(true);
+  //   }
+  //   scrollY.current = window.pageYOffset;
+  // };
+
+  // useEffect(() => {
+  //   window?.addEventListener("scroll", pageYscroll);
+
+  //   return () => {
+  //     window?.removeEventListener("scroll", pageYscroll);
+  //   };
+  // }, []);
+
+  // console.log(toBottom);
+
+  // useEffect(() => {
+  //   if (toBottom) {
+  //     controls.start("visible");
+  //   } else if (!toBottom && !inView) {
+  //     controls.start("hidden");
+  //   }
+  // }, [inView, setToBottom]);
