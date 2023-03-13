@@ -49,7 +49,6 @@ const PICard = styled.div`
     margin: auto;
     padding: 20px 20px;
   }
-
   img {
     height: 130px;
     margin: auto;
