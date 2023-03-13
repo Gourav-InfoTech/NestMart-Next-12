@@ -4,42 +4,81 @@ import styled from "styled-components";
 import { DOD_BANNER } from "../Utils/DATA";
 import DodBanner from "./DodBanner";
 import DodItem from "./DodItem";
-import { useAnimation, motion } from "framer-motion";
+import { useAnimation, motion, useScroll } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const dodBoxVariant = {
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   hidden: { opacity: 0, y: 100 },
 };
 
 const DealsOfTheDay = () => {
   const controls = useAnimation();
   const [dodRef, inView] = useInView();
-  const [isScroll, setIsScroll] = useState(false)
+  const [toBottom, setToBottom] = useState(true);
+  const scrollY = useRef(0);
 
-  if(typeof window !== "undefined" && isScroll){
-    let oldScrollY = window.scrollY;
-    let targetScrollY = window.scrollY;
-    window.onscroll = function (e) {
-      if (oldScrollY < window.scrollY && inView) {
-        controls.start("visible");
-        targetScrollY = window.scrollY;
-        // console.log(targetScrollY, "tttttttttttttttt");
-      } else if (oldScrollY > window.scrollY) {
-        controls.start("visible");
-      } else if (targetScrollY > window.scrollY && !inView) {
-        controls.start("hidden");
-      }
-      oldScrollY = window.scrollY;
-    };
-  }
-
+  const pageYscroll = () => {
+    if (scrollY.current > window.pageYOffset) {
+      setToBottom(false);
+    } else {
+      setToBottom(true);
+    }
+    scrollY.current = window.pageYOffset;
+  };
 
   useEffect(() => {
-    setIsScroll(true);
-  }, [])
-  
+    window?.addEventListener("scroll", pageYscroll);
 
+    return () => {
+      window?.removeEventListener("scroll", pageYscroll);
+    };
+  }, []);
+
+  console.log(toBottom);
+
+  useEffect(() => {
+    if (toBottom) {
+      controls.start("visible");
+    } else if (!toBottom && !inView) {
+      controls.start("hidden");
+    }
+  }, [inView, setToBottom]);
+
+  // useEffect(() => {
+  //   let position = window.scrollY;
+  //   console.log(position);
+
+  //   if (position > yScroll) {
+  //     setToBottom(true);
+  //   } else {
+  //     setToBottom(false);
+  //   }
+  // }, [yScroll]);
+  // if(typeof window !== "undefined" ){
+  //   let oldScrollY = window.scrollY;
+  //   let targetScrollY = window.scrollY;
+  //   window.onscroll = function (e) {
+  //     if (oldScrollY < window.scrollY && inView) {
+  //       controls.start("visible");
+  //       targetScrollY = window.scrollY;
+  //     } else if (oldScrollY > window.scrollY) {
+  //       controls.start("visible");
+  //     } else if (targetScrollY > window.scrollY && !inView) {
+  //       controls.start("hidden");
+  //     }
+  //     oldScrollY = window.scrollY;
+  //   };
+  // }
+  console.log(toBottom);
+
+  // useEffect(() => {
+  //   if (inView) {
+  //     controls.start("visible");
+  //   } else {
+  //     controls.start("hidden");
+  //   }
+  // }, [inView]);
 
   return (
     <>

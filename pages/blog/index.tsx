@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "./Layout";
+// import Layout from "./Layout";
 
 const index = () => {
-  return <Layout> <div className="common_width section_padding">blog</div> </Layout>;
+  return  <div className="common_width section_padding">blog</div> 
 };
 
 export default index;

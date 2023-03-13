@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import TopProductCard from "../components/TopProductCard";
 import { useAnimation, motion } from "framer-motion";
@@ -6,8 +6,8 @@ import { useInView } from "react-intersection-observer";
 import { Product_Api } from "../Utils/Api";
 
 const topItemVariant = {
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-  hidden: { opacity: 0, y: 200 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  hidden: { opacity: 0, y: 100 },
 };
 
 const TopProducts = ({ data }: any) => {
@@ -17,28 +17,57 @@ const TopProducts = ({ data }: any) => {
   const [men, setMen] = useState([]);
   const controls = useAnimation();
   const [ref, inView] = useInView();
-  const [isScroll, setIsScroll] = useState(false);
 
-  if (typeof window !== "undefined" && isScroll) {
-    let oldScrollY = window.scrollY;
-    let targetScrollY = window.scrollY;
+  const [toBottom, setToBottom] = useState(true);
+  const scrollY = useRef(0);
 
-    window.onscroll = function (e) {
-      if (oldScrollY < window.scrollY && inView) {
-        controls.start("visible");
-        targetScrollY = window.scrollY;
-      } else if (oldScrollY > window.scrollY) {
-        controls.start("visible");
-      } else if (targetScrollY > window.scrollY && !inView) {
-        controls.start("hidden");
-      }
-      oldScrollY = window.scrollY;
-    };
-  }
+  console.log(scrollY);
+  
+
+  const pageYscroll = () => {
+    if (scrollY.current > window.pageYOffset) {
+      setToBottom(false);
+    } else {
+      setToBottom(true);
+    }
+    scrollY.current = window.pageYOffset;
+  };
 
   useEffect(() => {
-    setIsScroll(true);
+    window?.addEventListener("scroll", pageYscroll);
+
+    return () => {
+      window?.removeEventListener("scroll", pageYscroll);
+    };
   }, []);
+
+  console.log(toBottom);
+
+  useEffect(() => {
+    if (toBottom) {
+      controls.start("visible");
+    } else if (!toBottom && !inView) {
+      controls.start("hidden");
+    }
+  }, [inView, setToBottom]);
+
+  // if (typeof window !== "undefined" ) {
+  //   let oldScrollY = window.scrollY;
+  //   let targetScrollY = window.scrollY;
+
+  //   window.onscroll = function (e) {
+  //     if (oldScrollY < window.scrollY && inView) {
+  //       controls.start("visible");
+  //       targetScrollY = window.scrollY;
+  //     } else if (oldScrollY > window.scrollY) {
+  //       controls.start("visible");
+  //     } else if (targetScrollY > window.scrollY && !inView) {
+  //       controls.start("hidden");
+  //     }
+  //     oldScrollY = window.scrollY;
+  //   };
+  // }
+
 
   useEffect(() => {
     setTopItems(data);
@@ -55,7 +84,7 @@ const TopProducts = ({ data }: any) => {
       ref={ref}
       animate={controls}
       variants={topItemVariant}
-      initial="hidden"
+      // initial="hidden"
       className="flex common_width "
     >
       <TopProductCard title={"Top Selling"} data={electronics} />

@@ -45,7 +45,7 @@ const Navbar = () => {
               <Link href="/blog">Blog</Link>
             </li>
             <li>
-              <Link href="/pages">Pages</Link>
+              <Link href="/dpages">Pages</Link>
             </li>
             <li>
               <Link href="/contact">Contact</Link>

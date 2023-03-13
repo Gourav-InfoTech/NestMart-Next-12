@@ -1,11 +1,13 @@
 import React from 'react'
 import { Product_Api } from '../../Utils/Api';
+import Content from './Content';
 
 const id = ({data}:any) => {
 
   return (
     <div>
-        <h1>{JSON.stringify(data)}</h1>
+        {/* <h1>{JSON.stringify(data)}</h1> */}
+        <Content data={data}/>
     </div>
   )
 }

@@ -38,6 +38,7 @@ const BTTDiv = styled.div`
   position: fixed;
   bottom: 3%;
   right: 2%;
+  z-index: 99;
 
   background-color: #def9ec;
   color: #3bb77e;
