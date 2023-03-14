@@ -18,7 +18,7 @@ export default SidebarAd;
 
 const AdBanner = styled.div`
 border-radius: 15px;
-  background-image: url("Images/sidebar-orange-juice.png");
+  background-image: url("/Images/sidebar-orange-juice.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

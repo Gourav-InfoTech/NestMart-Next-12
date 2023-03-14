@@ -5,7 +5,7 @@ const SbcCard = () => {
   return (
     <>
       <SBC_CARD>
-        <img src="categoryicons/category-1.svg" alt="" />
+        <img src="/categoryicons/category-1.svg" alt="" />
         <p>Milks and Dairies</p>
       </SBC_CARD>
     </>

@@ -5,7 +5,7 @@ const NewProducts = () => {
     return (
         <NewProductDiv>
             <div className="img">
-                <img src="Images/mangojuice.jpg" alt="" />
+                <img src="/Images/mangojuice.jpg" alt="" />
             </div>
             <div className="iteminfo">
                 <h1>
