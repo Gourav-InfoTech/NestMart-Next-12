@@ -60,5 +60,6 @@ const PopularProductsDiv = styled.div`
   .Popular_Items {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
+    min-height: 500px;
   }
 `;
